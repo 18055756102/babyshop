@@ -1,27 +1,55 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+
 
 Vue.use(VueRouter)
 
 const routes = [
-  {
-    path: '/',
-    name: 'Home',
-    component: Home
-  },
-  {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  }
+    //重定向
+    {
+        path: '/',
+        redirect: '/index'
+    },
+
+    //这是home页面
+    {
+        path: '/',
+        component: () =>
+            import ('../views/Home.vue'),
+        children: [
+            //底部的四个页面
+            {
+                path: '/index',
+                component: () =>
+                    import ('../views/Index.vue'),
+            },
+            {
+                path: '/classify',
+                component: () =>
+                    import ('../views/Classify.vue'),
+            },
+            {
+                path: '/cart',
+                component: () =>
+                    import ('../views/Cart.vue'),
+            },
+            {
+                path: '/mine',
+                component: () =>
+                    import ('../views/Mine.vue'),
+            },
+        ]
+    },
+    //这是详情页 这样的话 下面是没有那四个按钮的
+
+
 ]
 
 const router = new VueRouter({
-  routes
+    routes
 })
+
+
+
 
 export default router
